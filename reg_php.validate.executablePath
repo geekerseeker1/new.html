@@ -1,0 +1,27 @@
+<?php
+// Database connection details
+$servername = "localhost";
+$username = "your_username";
+$password = "your_password";
+$dbname = "your_database";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Process form submission
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $firstname = $_POST["firstname"];
+    $lastname = $_POST["lastname"];
+    $username = $_POST["username"];
+    $profilePicture = $_FILES["profile_picture"]["name"];
+
+    // Move uploaded profile picture to a directory
+    $targetDirectory = "profile_pictures/";
+    $targetFilePath = $targetDirectory . basename($profilePicture);
+    move_uploaded_file($_FILES["profile_picture"]["tmp_name"], $targetFilePath);
+
